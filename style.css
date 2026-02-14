@@ -30,8 +30,13 @@ body {
     width: min(100%, 720px);
 }
 
+.is-hidden {
+    display: none;
+}
+
 .hero {
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .hero-kicker {

@@ -3,9 +3,7 @@
  * Controlador principal de la interfaz.
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    initApp();
-});
+document.addEventListener('DOMContentLoaded', initApp);
 
 async function initApp() {
     const loader = document.getElementById('loader');
@@ -18,16 +16,28 @@ async function initApp() {
 
     try {
         const data = await fetchAmazonClimateData();
-        const annualTemp = Number(data.properties.parameter.T2M.ANN);
+        const annualTemp = Number(data?.properties?.parameter?.T2M?.ANN);
 
-        loader.classList.add('d-none');
-        content.classList.remove('d-none');
+        if (!Number.isFinite(annualTemp)) {
+            throw new Error('Dato de temperatura inválido');
+        }
+
+        hideElement(loader);
+        showElement(content);
 
         animateTemperatureValue(tempValue, annualTemp);
         applyTemperatureState(panel, tempLabel, tempDesc, annualTemp);
     } catch (error) {
-        loader.classList.add('d-none');
+        hideElement(loader);
         errorMessage.textContent = 'No se pudo obtener la lectura climática. Verifica tu conexión e inténtalo de nuevo.';
-        errorMessage.classList.remove('d-none');
+        showElement(errorMessage);
     }
+}
+
+function hideElement(element) {
+    element.classList.add('is-hidden');
+}
+
+function showElement(element) {
+    element.classList.remove('is-hidden');
 }

@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitor Amazonas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="page-shell">
-        <header class="hero text-center">
+        <header class="hero">
             <p class="hero-kicker">Monitoreo climático</p>
             <h1 class="hero-title">Temperatura del Amazonas</h1>
             <p class="hero-subtitle">Dato climatológico anual de la NASA para el corazón de la selva.</p>
@@ -17,19 +16,19 @@
 
         <main class="temperature-panel" aria-live="polite">
             <div id="loader" class="loader" role="status">
-                <span class="loader-dot"></span>
+                <span class="loader-dot" aria-hidden="true"></span>
                 <span>Cargando lectura...</span>
             </div>
 
-            <div id="temperature-content" class="d-none">
+            <div id="temperature-content" class="is-hidden">
                 <p class="location">Lat -3.46 · Lon -62.21</p>
-                <div id="temp-orb" class="temp-orb" aria-hidden="true"></div>
+                <div class="temp-orb" aria-hidden="true"></div>
                 <h2 id="temp-value" class="temperature-value">--°C</h2>
                 <p id="temp-label" class="temperature-label">Estado térmico</p>
                 <p id="temp-desc" class="temperature-description">Promedio climatológico anual a 2 metros de altura.</p>
             </div>
 
-            <div id="error-message" class="error-message d-none" role="alert"></div>
+            <p id="error-message" class="error-message is-hidden" role="alert"></p>
         </main>
     </div>
 
