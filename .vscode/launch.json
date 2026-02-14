@@ -1,23 +1,19 @@
 {
-    // Use IntelliSense para saber los atributos posibles.
-    // Mantenga el puntero para ver las descripciones de los existentes atributos.
-    // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Chrome",
-            "request": "launch",
-            "type": "chrome",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-
-        {
+            "name": "Depurar Frontend Local",
             "type": "chrome",
             "request": "launch",
-            "name": "Iniciar Chrome para localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            /* Usamos 'file' en lugar de 'url' para evitar errores de conexión 
+               si el servidor local no está activo. 
+            */
+            "file": "${workspaceFolder}/index.html",
+            "webRoot": "${workspaceFolder}",
+            /* Mantenemos el path mapping para que los breakpoints 
+               en los archivos .js funcionen correctamente. 
+            */
+            "sourceMaps": true
         }
     ]
 }
