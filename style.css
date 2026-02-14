@@ -61,6 +61,7 @@ body {
     padding: 2rem;
     text-align: center;
     background: var(--panel-bg);
+    -webkit-backdrop-filter: blur(9px); /* Para Safari y versiones antiguas de Chrome/Edge */
     backdrop-filter: blur(9px);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
 }
