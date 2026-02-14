@@ -1,41 +1,43 @@
 /**
  * main.js
- * Controlador de la interfaz de usuario.
+ * Controlador principal de la interfaz.
  */
 
-// Esperamos a que el HTML esté completamente cargado en el móvil
-document.addEventListener('DOMContentLoaded', () => {
-    initApp();
-});
+document.addEventListener('DOMContentLoaded', initApp);
 
 async function initApp() {
-    // Referencias a los elementos del DOM (HTML)
     const loader = document.getElementById('loader');
+    const panel = document.querySelector('.temperature-panel');
+    const content = document.getElementById('temperature-content');
     const tempValue = document.getElementById('temp-value');
+    const tempLabel = document.getElementById('temp-label');
     const tempDesc = document.getElementById('temp-desc');
     const errorMessage = document.getElementById('error-message');
 
     try {
-        // Llamamos a la función alojada en js/api.js
         const data = await fetchAmazonClimateData();
-        
-        // Extraemos el dato exacto: Promedio Anual (ANN) de la temperatura
-        const annualTemp = data.properties.parameter.T2M.ANN;
-        
-        // 1. Ocultamos el loader
-        loader.classList.add('d-none');
-        
-        // 2. Inyectamos los datos reales
-        tempValue.textContent = `${annualTemp}°C`;
-        
-        // 3. Mostramos los elementos
-        tempValue.classList.remove('d-none');
-        tempDesc.classList.remove('d-none');
+        const annualTemp = Number(data?.properties?.parameter?.T2M?.ANN);
 
+        if (!Number.isFinite(annualTemp)) {
+            throw new Error('Dato de temperatura inválido');
+        }
+
+        hideElement(loader);
+        showElement(content);
+
+        animateTemperatureValue(tempValue, annualTemp);
+        applyTemperatureState(panel, tempLabel, tempDesc, annualTemp);
     } catch (error) {
-        // Manejo de errores a prueba de fallos
-        loader.classList.add('d-none');
-        errorMessage.textContent = 'No se pudo conectar con el satélite climático. Revisa tu conexión a internet.';
-        errorMessage.classList.remove('d-none');
+        hideElement(loader);
+        errorMessage.textContent = 'No se pudo obtener la lectura climática. Verifica tu conexión e inténtalo de nuevo.';
+        showElement(errorMessage);
     }
+}
+
+function hideElement(element) {
+    element.classList.add('is-hidden');
+}
+
+function showElement(element) {
+    element.classList.remove('is-hidden');
 }
