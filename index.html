@@ -209,6 +209,11 @@
             border-radius: var(--border-radius);
             text-align: center;
             transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .char-card:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
         }
         .char-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
         .char-img {
@@ -301,6 +306,131 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
         .thermo-status { font-size: 1.1rem; font-weight: bold; margin-top: 10px; min-height: 1.5em; }
+
+        body .top-ticker,
+        body header,
+        body main > *,
+        body footer {
+            transition: opacity 0.35s ease;
+        }
+
+        body.slider-active .top-ticker,
+        body.slider-active header,
+        body.slider-active main > *:not(.thermometer-card),
+        body.slider-active footer {
+            opacity: 0.15;
+        }
+
+        body.slider-active .thermometer-card {
+            opacity: 1;
+        }
+
+        /* --- Character Modal --- */
+        .profile-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .profile-modal.is-visible {
+            display: flex;
+        }
+
+        .profile-content {
+            width: min(680px, 100%);
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .profile-close {
+            border: none;
+            background: transparent;
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .profile-body {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 16px;
+            padding: 18px;
+        }
+
+        .profile-photo {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+        }
+
+        .profile-empty-photo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #64748b;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .profile-copy h4 {
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.8rem;
+        }
+
+        .profile-copy p {
+            margin-bottom: 10px;
+        }
+
+        .theme-retro {
+            background: #0f0f0f;
+            color: #f8f8f8;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        .theme-retro .profile-header,
+        .theme-retro .profile-photo {
+            border-color: #444;
+        }
+
+        .theme-retro .profile-photo {
+            filter: grayscale(100%) contrast(120%);
+        }
+
+        .theme-vital {
+            background: linear-gradient(160deg, #f0fdf4, #dcfce7 45%, #ecfeff);
+            color: #064e3b;
+        }
+
+        .theme-vital .profile-empty-photo {
+            color: #047857;
+            background: rgba(16, 185, 129, 0.12);
+            border-color: rgba(5, 150, 105, 0.3);
+        }
+
+        @media (max-width: 640px) {
+            .profile-body { grid-template-columns: 1fr; }
+        }
 
         /* --- Section 7: Agreement --- */
         .agreement-list { list-style: none; }
@@ -460,31 +590,31 @@
         <section class="card">
             <div class="card-header">Las Caras del Conflicto</div>
             <div class="char-grid">
-                <div class="char-card">
+                <div class="char-card" data-profile="onu" role="button" tabindex="0">
                     <div class="char-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;background:#3b82f6;color:white;">🌍</div>
                     <div class="char-role">Mediación</div>
                     <div class="char-name">ONU</div>
                     <div class="char-stance">"Sin certificación no hay mercado."</div>
                 </div>
-                <div class="char-card">
+                <div class="char-card" data-profile="gobierno" role="button" tabindex="0">
                     <div class="char-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;background:#64748b;color:white;">🏛️</div>
                     <div class="char-role">Soberanía</div>
                     <div class="char-name">Gobierno Nacional</div>
                     <div class="char-stance">"Control estatal de datos y tiempos."</div>
                 </div>
-                <div class="char-card">                    
+                <div class="char-card" data-profile="corporacion" role="button" tabindex="0">                    
 					<div class="char-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;background:#64748b;color:white;">💰</div>
                     <div class="char-role">Corporación</div>
                     <div class="char-name">Viktor Hale</div>
                     <div class="char-stance">"Reglas claras para invertir."</div>
                 </div>
-                <div class="char-card">
+                <div class="char-card" data-profile="jaguar" role="button" tabindex="0">
                     <div class="char-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;background:#64748b;color:white;">🐆️</div>
                     <div class="char-role">Redes Ilegales</div>
                     <div class="char-name">El Jaguar</div>
                     <div class="char-stance">"La selva se adapta, no firma."</div>
                 </div>
-                <div class="char-card">
+                <div class="char-card" data-profile="comunidad" role="button" tabindex="0">
                     <div class="char-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;background:#059669;color:white;">🌿</div>
                     <div class="char-role">Territorio</div>
                     <div class="char-name">Comunidad</div>
@@ -539,7 +669,7 @@
             <button class="transcript-toggle" onclick="toggleChat()">▼ Ver transcripción completa</button>
         </section>
 
-        <section class="card">
+        <section class="card thermometer-card">
             <div class="card-header">Termómetro de Estabilidad</div>
             <div class="thermometer-wrapper">
                 <div class="thermo-status" id="thermo-text" style="color: #f59e0b;">Contención parcial, riesgo de fragmentación</div>
@@ -618,6 +748,23 @@
         </div>
     </footer>
 
+    <div class="profile-modal" id="profile-modal" aria-hidden="true">
+        <div class="profile-content" id="profile-content">
+            <div class="profile-header">
+                <strong id="profile-title">Perfil</strong>
+                <button class="profile-close" id="profile-close" aria-label="Cerrar modal">×</button>
+            </div>
+            <div class="profile-body">
+                <div id="profile-media"></div>
+                <div class="profile-copy">
+                    <h4 id="profile-role">Rol</h4>
+                    <p id="profile-quote"></p>
+                    <p id="profile-description"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Fecha actual
         document.getElementById('current-date').innerText = new Date().toLocaleDateString('es-ES', { 
@@ -642,25 +789,40 @@
  * Utiliza un patrón de configuración para evitar múltiples if/else, mejorando la legibilidad.
  * * @param {number} val - Valor actual del slider (0 a 100).
  */
-function updateThermo(val) {
+const peaceSlider = document.getElementById('peace-slider');
+let sliderFadeTimer;
+
+/**
+ * Actualiza el termómetro y el fondo según el nivel de tensión (0-100).
+ * Además, reduce temporalmente la opacidad del resto de la página
+ * para destacar el efecto de transición del fondo.
+ *
+ * @param {number|string} value - Valor actual del slider (0 a 100).
+ */
+function updateThermo(value) {
+    const val = Number(value);
     const text = document.getElementById('thermo-text');
     const body = document.body;
 
-    // Definición centralizada de los 4 estados (KISS & DRY)
+    // Definición centralizada de los estados (KISS)
     const riskStates = [
-        { max: 25, img: 'assets/1.png', msg: 'Paz y conservación total', color: '#10b981' }, // 0 - 24%
-        { max: 50, img: 'assets/2.png', msg: 'Explotación y deforestación inicial', color: '#f59e0b' }, // 25 - 49%
-        { max: 75, img: 'assets/3.png', msg: 'Riesgo de escalada e incendios', color: '#ea580c' }, // 50 - 74%
-        { max: 101, img: 'assets/4.png', msg: 'Guerra total y devastación', color: '#dc2626' }  // 75 - 100%
+        { max: 25, img: 'assets/1.png', msg: 'Paz y conservación total', color: '#10b981' },
+        { max: 50, img: 'assets/2.png', msg: 'Explotación y deforestación inicial', color: '#f59e0b' },
+        { max: 75, img: 'assets/3.png', msg: 'Riesgo de escalada e incendios', color: '#ea580c' },
+        { max: 101, img: 'assets/4.png', msg: 'Guerra total y devastación', color: '#dc2626' }
     ];
 
-    // Encontramos el primer estado donde el valor sea menor que el límite máximo
     const currentState = riskStates.find(state => val < state.max);
 
-    // Aplicamos los cambios al DOM
     text.innerText = currentState.msg;
     text.style.color = currentState.color;
     body.style.backgroundImage = `url('${currentState.img}')`;
+
+    body.classList.add('slider-active');
+    clearTimeout(sliderFadeTimer);
+    sliderFadeTimer = setTimeout(() => {
+        body.classList.remove('slider-active');
+    }, 1000);
 }
 
         // Map Modal Logic
@@ -680,24 +842,135 @@ function updateThermo(val) {
             modal.style.display = 'none';
         });
 
+        const profileData = {
+            onu: {
+                title: 'ONU · Enviado Especial',
+                role: 'Mediación internacional',
+                quote: '"Si la diplomacia falla, el territorio lo paga en décadas."',
+                description: 'La delegación impulsa controles externos con urgencia. Busca frenar la espiral de violencia antes de que el conflicto quede fuera de cualquier tratado.',
+                photo: '',
+                theme: 'retro'
+            },
+            gobierno: {
+                title: 'Gobierno Nacional · Ministro de Coordinación',
+                role: 'Soberanía y control político',
+                quote: '"Nadie tutela al Estado. Ceder un dato hoy es ceder una frontera mañana."',
+                description: 'Defiende una estrategia de autoridad dura y tiempos lentos. Cada concesión se comunica como una derrota, y cada auditoría externa es presentada como amenaza al mando central.',
+                photo: 'assets/personaje1.png',
+                theme: 'retro'
+            },
+            corporacion: {
+                title: 'Viktor Hale · Consejo Minero',
+                role: 'Capital y extracción',
+                quote: '"La rentabilidad no espera al consenso. O hay ruta, o hay reemplazo."',
+                description: 'Hale combina discurso técnico con presión financiera. Habla de inversión responsable mientras exige corredores operativos inmediatos, incluso en escenarios de alta tensión social.',
+                photo: 'assets/personaje2.png',
+                theme: 'retro'
+            },
+            jaguar: {
+                title: 'El Jaguar · Operador de redes ilegales',
+                role: 'Economía paralela',
+                quote: '"Cuando el mapa oficial se borra, mi mapa empieza."',
+                description: 'Su estructura vive de la inestabilidad. Aprovecha vacíos de control y pactos frágiles para expandir rutas clandestinas con una lógica simple: sobrevivir primero, negociar después.',
+                photo: 'assets/personaje3.png',
+                theme: 'retro'
+            },
+            comunidad: {
+                title: 'Comunidad · Vocería territorial',
+                role: 'Defensa de vida y equilibrio',
+                quote: '"No somos daño colateral: somos raíz, agua y futuro."',
+                description: 'La voz comunitaria exige protección real del bosque, salud y seguridad alimentaria. Su postura busca reconciliar territorio y dignidad con una salida estable y luminosa.',
+                photo: '',
+                theme: 'vital'
+            }
+        };
+
+        const profileModal = document.getElementById('profile-modal');
+        const profileContent = document.getElementById('profile-content');
+        const profileTitle = document.getElementById('profile-title');
+        const profileRole = document.getElementById('profile-role');
+        const profileQuote = document.getElementById('profile-quote');
+        const profileDescription = document.getElementById('profile-description');
+        const profileMedia = document.getElementById('profile-media');
+
+        function renderProfileMedia(photo, title) {
+            if (photo) {
+                profileMedia.innerHTML = `<img src="${photo}" alt="Retrato de ${title}" class="profile-photo">`;
+                return;
+            }
+
+            profileMedia.innerHTML = '<div class="profile-photo profile-empty-photo">Espacio reservado para fotografía oficial del personaje.</div>';
+        }
+
+        function openProfile(profileKey) {
+            const profile = profileData[profileKey];
+            if (!profile) return;
+
+            profileTitle.textContent = profile.title;
+            profileRole.textContent = profile.role;
+            profileQuote.textContent = profile.quote;
+            profileDescription.textContent = profile.description;
+            renderProfileMedia(profile.photo, profile.title);
+
+            profileContent.classList.remove('theme-retro', 'theme-vital');
+            profileContent.classList.add(profile.theme === 'vital' ? 'theme-vital' : 'theme-retro');
+
+            profileModal.classList.add('is-visible');
+            profileModal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeProfile() {
+            profileModal.classList.remove('is-visible');
+            profileModal.setAttribute('aria-hidden', 'true');
+        }
+
+        document.querySelectorAll('.char-card[data-profile]').forEach((card) => {
+            const key = card.getAttribute('data-profile');
+
+            card.addEventListener('click', () => openProfile(key));
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openProfile(key);
+                }
+            });
+        });
+
+        document.getElementById('profile-close').addEventListener('click', closeProfile);
+
+        profileModal.addEventListener('click', (event) => {
+            if (event.target === profileModal) closeProfile();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') closeProfile();
+        });
+
         // Panic Button Logic
         function togglePanic() {
             document.body.classList.toggle('panic-mode');
             document.body.classList.toggle('shake');
-            
+
             const panel = document.getElementById('dystopia-panel');
             const btn = document.querySelector('.btn-panic');
-            
-            if (panel.style.display === 'block') {
-                panel.style.display = 'none';
-                btn.innerText = "¿QUÉ PASA SI FALLA LA DIPLOMACIA?";
-                setTimeout(() => document.body.classList.remove('shake'), 500);
-            } else {
+            const panicEnabled = panel.style.display !== 'block';
+
+            if (panicEnabled) {
                 panel.style.display = 'block';
                 btn.innerText = "ALERTA: MODO FALLO ACTIVO";
-                setTimeout(() => document.body.classList.remove('shake'), 500);
+                peaceSlider.value = 100;
+                updateThermo(100);
+            } else {
+                panel.style.display = 'none';
+                btn.innerText = "¿QUÉ PASA SI FALLA LA DIPLOMACIA?";
+                peaceSlider.value = 50;
+                updateThermo(50);
             }
+
+            setTimeout(() => document.body.classList.remove('shake'), 500);
         }
+
+        updateThermo(peaceSlider.value);
     </script>
 </body>
 </html>
